@@ -157,15 +157,25 @@ public interface tigerListener extends ParseTreeListener {
 	 */
 	void exitStat(tigerParser.StatContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link tigerParser#optPrefix}.
+	 * Enter a parse tree produced by {@link tigerParser#statIfTail}.
 	 * @param ctx the parse tree
 	 */
-	void enterOptPrefix(tigerParser.OptPrefixContext ctx);
+	void enterStatIfTail(tigerParser.StatIfTailContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link tigerParser#optPrefix}.
+	 * Exit a parse tree produced by {@link tigerParser#statIfTail}.
 	 * @param ctx the parse tree
 	 */
-	void exitOptPrefix(tigerParser.OptPrefixContext ctx);
+	void exitStatIfTail(tigerParser.StatIfTailContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link tigerParser#statIdTail}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatIdTail(tigerParser.StatIdTailContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link tigerParser#statIdTail}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatIdTail(tigerParser.StatIdTailContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link tigerParser#expr}.
 	 * @param ctx the parse tree
@@ -177,6 +187,76 @@ public interface tigerListener extends ParseTreeListener {
 	 */
 	void exitExpr(tigerParser.ExprContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link tigerParser#exprOr}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprOr(tigerParser.ExprOrContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link tigerParser#exprOr}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprOr(tigerParser.ExprOrContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link tigerParser#exprAnd}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprAnd(tigerParser.ExprAndContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link tigerParser#exprAnd}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprAnd(tigerParser.ExprAndContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link tigerParser#exprRel}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprRel(tigerParser.ExprRelContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link tigerParser#exprRel}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprRel(tigerParser.ExprRelContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link tigerParser#exprAdd}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprAdd(tigerParser.ExprAddContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link tigerParser#exprAdd}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprAdd(tigerParser.ExprAddContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link tigerParser#exprMult}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprMult(tigerParser.ExprMultContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link tigerParser#exprMult}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprMult(tigerParser.ExprMultContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link tigerParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterAtom(tigerParser.AtomContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link tigerParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitAtom(tigerParser.AtomContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link tigerParser#atomTail}.
+	 * @param ctx the parse tree
+	 */
+	void enterAtomTail(tigerParser.AtomTailContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link tigerParser#atomTail}.
+	 * @param ctx the parse tree
+	 */
+	void exitAtomTail(tigerParser.AtomTailContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link tigerParser#const}.
 	 * @param ctx the parse tree
 	 */
@@ -186,16 +266,6 @@ public interface tigerListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitConst(tigerParser.ConstContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link tigerParser#binaryOperator}.
-	 * @param ctx the parse tree
-	 */
-	void enterBinaryOperator(tigerParser.BinaryOperatorContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link tigerParser#binaryOperator}.
-	 * @param ctx the parse tree
-	 */
-	void exitBinaryOperator(tigerParser.BinaryOperatorContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link tigerParser#exprList}.
 	 * @param ctx the parse tree
@@ -207,23 +277,33 @@ public interface tigerListener extends ParseTreeListener {
 	 */
 	void exitExprList(tigerParser.ExprListContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link tigerParser#lvalue}.
+	 * Enter a parse tree produced by {@link tigerParser#opRel}.
 	 * @param ctx the parse tree
 	 */
-	void enterLvalue(tigerParser.LvalueContext ctx);
+	void enterOpRel(tigerParser.OpRelContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link tigerParser#lvalue}.
+	 * Exit a parse tree produced by {@link tigerParser#opRel}.
 	 * @param ctx the parse tree
 	 */
-	void exitLvalue(tigerParser.LvalueContext ctx);
+	void exitOpRel(tigerParser.OpRelContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link tigerParser#lvalueTail}.
+	 * Enter a parse tree produced by {@link tigerParser#opAdd}.
 	 * @param ctx the parse tree
 	 */
-	void enterLvalueTail(tigerParser.LvalueTailContext ctx);
+	void enterOpAdd(tigerParser.OpAddContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link tigerParser#lvalueTail}.
+	 * Exit a parse tree produced by {@link tigerParser#opAdd}.
 	 * @param ctx the parse tree
 	 */
-	void exitLvalueTail(tigerParser.LvalueTailContext ctx);
+	void exitOpAdd(tigerParser.OpAddContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link tigerParser#opMult}.
+	 * @param ctx the parse tree
+	 */
+	void enterOpMult(tigerParser.OpMultContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link tigerParser#opMult}.
+	 * @param ctx the parse tree
+	 */
+	void exitOpMult(tigerParser.OpMultContext ctx);
 }

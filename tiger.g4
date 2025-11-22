@@ -1,9 +1,9 @@
 grammar tiger;
 
-// Start rule
+// Parser Rules
+
 tigerProgram: 'main' 'let' declarationSegment 'in' 'begin' statSeq 'end';
 
-// Declaration segment
 declarationSegment: varDeclarationList functDeclarationList;
 
 varDeclarationList: varDeclaration*;
@@ -14,67 +14,74 @@ functDeclarationList: functDeclaration*;
 
 functDeclaration: 'function' ID '(' paramList ')' retType 'begin' statSeq 'end';
 
-// Types
 type: typeId
     | 'array' '[' INTLIT ']' 'of' typeId
     ;
 
 typeId: 'int' | 'float';
 
-// ID lists
 idList: ID (',' ID)*;
 
-// Optional initialization
 optionalInit: (':=' const)?;
 
-// Parameters
 paramList: (param (',' param)*)?;
 
 param: ID ':' type;
 
 retType: (':' type)?;
 
-// Statement sequence
 statSeq: stat+;
 
-// Statements
-stat: lvalue ':=' expr ';'
-    | 'if' expr 'then' statSeq 'endif' ';'
-    | 'if' expr 'then' statSeq 'else' statSeq 'endif' ';'
+stat: 'if' expr 'then' statSeq statIfTail
     | 'while' expr 'do' statSeq 'enddo' ';'
     | 'for' ID ':=' expr 'to' expr 'do' statSeq 'enddo' ';'
-    | optPrefix ID '(' exprList ')' ';'
     | 'break' ';'
     | 'return' expr ';'
     | 'let' declarationSegment 'in' statSeq 'end'
+    | ID statIdTail
     ;
 
-optPrefix: (lvalue ':=')?
-    ;
+statIfTail: 'endif' ';'
+          | 'else' statSeq 'endif' ';'
+          ;
 
-// Expressions (this will need fixing later for precedence/associativity)
-expr: const
-    | lvalue
-    | expr binaryOperator expr
+statIdTail: ':=' expr ';'
+          | '[' expr ']' ':=' expr ';'
+          | '(' exprList ')' ';'
+          ;
+
+expr: exprOr;
+
+exprOr: exprAnd ('|' exprOr)?;
+
+exprAnd: exprRel ('&' exprAnd)?;
+
+exprRel: exprAdd (opRel exprRel)?;
+
+exprAdd: exprMult (opAdd exprAdd)?;
+
+exprMult: atom (opMult exprMult)?;
+
+atom: const
+    | ID atomTail
     | '(' expr ')'
     ;
 
+atomTail: '[' expr ']'
+        | '(' exprList ')'
+        | 
+        ;
+
 const: INTLIT | FLOATLIT;
 
-binaryOperator: '+' | '-' | '*' | '/' | '=' | '<>' | '<' | '>' | '<=' | '>=' | '&' | '|';
-
-// Expression lists
 exprList: (expr (',' expr)*)?;
 
-// L-values
-lvalue: ID lvalueTail;
+opRel: '=' | '<>' | '<' | '>' | '<=' | '>=';
+opAdd: '+' | '-';
+opMult: '*' | '/';
 
-lvalueTail: ('[' expr ']')?
-    ;
+// Lexer Rules
 
-// ========== LEXER RULES (TOKENS) ==========
-
-// Keywords (must come before ID)
 MAIN: 'main';
 ARRAY: 'array';
 BREAK: 'break';
@@ -98,7 +105,6 @@ RETURN: 'return';
 INT: 'int';
 FLOAT: 'float';
 
-// Operators and punctuation (order matters - longer operators first)
 ASSIGN: ':=';
 LE: '<=';
 GE: '>=';
@@ -120,14 +126,12 @@ RPAREN: ')';
 LBRACKET: '[';
 RBRACKET: ']';
 
-// Identifiers and literals
 ID: [a-zA-Z][a-zA-Z0-9_]*;
 
 INTLIT: [0-9]+;
 
 FLOATLIT: [0-9]+ '.' [0-9]*;
 
-// Comments and whitespace
 COMMENT: '/*' .*? '*/' -> skip;
 
 WS: [ \t\r\n]+ -> skip;
